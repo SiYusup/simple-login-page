@@ -13,7 +13,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Halaman Admin</a>
-            <div class="d-flex">
+            <div class="d-flex align-items-center">
+                <span class="text-light me-3">Halo, <strong><?= htmlspecialchars($currentUsername) ?></strong></span>
                 <a href="/simple-login-page/logout" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -29,12 +30,11 @@
                 <div class="card shadow-sm">
                     <div class="card-body p-4">
                         
-                        <!-- Menampilkan Username (Bisa diganti lewat Modal) -->
+                        <!-- Menampilkan Username -->
                         <div class="mb-4">
                             <label class="form-label text-muted small fw-bold">USERNAME SAAT INI</label>
                             <div class="input-group">
-                                <!-- Dummy username: admin_utama. Nanti bisa diganti pakai variabel PHP -->
-                                <input type="text" class="form-control bg-white" value="admin_utama" readonly>
+                                <input type="text" class="form-control bg-white" value="<?= htmlspecialchars($currentUsername) ?>" readonly>
                                 <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalGantiUsername">
                                     Ganti
                                 </button>
@@ -42,7 +42,7 @@
                         </div>
 
                         <!-- Menampilkan Password (Disamarkan) -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label class="form-label text-muted small fw-bold">PASSWORD SAAT INI</label>
                             <div class="input-group">
                                 <input type="password" class="form-control bg-white" value="********" readonly>
@@ -50,6 +50,15 @@
                                     Ganti
                                 </button>
                             </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Fitur Hapus Akun -->
+                        <div class="d-grid mt-4">
+                            <form action="/simple-login-page/admin/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini secara permanen?')">
+                                <button type="submit" class="btn btn-danger w-100">Hapus Akun Saya</button>
+                            </form>
                         </div>
 
                     </div>

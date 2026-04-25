@@ -1,5 +1,11 @@
 <?php
-// Ini adalah Entry Point utama (pengganti index.html)
-// Semua request akan masuk ke sini lalu diteruskan ke router
 
+/**
+ * Entry Point Aplikasi
+ * Mengaktifkan Autoloader Composer agar class dapat dimuat otomatis menggunakan 'use'
+ */
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Memanggil file routing utama
 require_once __DIR__ . '/../routes/web.php';

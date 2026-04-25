@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../app/Core/Route.php';
+use Ucup\SimpleLoginPage\Core\Route;
 
 // ==========================================
 // DAFTAR RUTE PUBLIK (Dapat diakses siapa saja)
@@ -20,6 +20,7 @@ Route::add('GET', '/logout', 'AuthController', 'logout', ['AuthMiddleware']);
 // Aksi dari tombol di dalam halaman Admin
 Route::add('POST', '/admin/update-username', 'DashboardController', 'updateUsername', ['AuthMiddleware']);
 Route::add('POST', '/admin/update-password', 'DashboardController', 'updatePassword', ['AuthMiddleware']);
+Route::add('POST', '/admin/delete', 'DashboardController', 'deleteAccount', ['AuthMiddleware']);
 
 // Jalankan Mesin Routernya
 Route::run();

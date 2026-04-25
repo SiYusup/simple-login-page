@@ -1,17 +1,13 @@
 <?php
 
+namespace Ucup\SimpleLoginPage\Core;
+
 class Route
 {
     private static array $routes = [];
 
     /**
      * Mendaftarkan rute baru beserta middleware-nya (opsional)
-     * 
-     * @param string $method     Metode HTTP (GET, POST)
-     * @param string $path       Path URL
-     * @param string $controller Nama Controller
-     * @param string $function   Nama fungsi di Controller
-     * @param array  $middlewares Array berisi nama class Middleware (contoh: ['AuthMiddleware'])
      */
     public static function add(string $method, string $path, string $controller, string $function, array $middlewares = [])
     {
@@ -27,8 +23,6 @@ class Route
     public static function run()
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        
-        // Sesuaikan dengan nama folder proyek Anda di htdocs
         $base_path = '/simple-login-page'; 
         $path = str_replace($base_path, '', $path);
         
@@ -45,64 +39,50 @@ class Route
                 
                 // --- 1. EKSEKUSI MIDDLEWARE SEBELUM CONTROLLER ---
                 foreach ($route['middlewares'] as $middleware) {
-                    $middlewareFile = __DIR__ . '/../Middleware/' . $middleware . '.php';
+                    $middlewareClass = "Ucup\\SimpleLoginPage\\Middleware\\" . $middleware;
                     
-                    if (file_exists($middlewareFile)) {
-                        require_once $middlewareFile;
-                        $middlewareInstance = new $middleware();
-                        
-                        // Menjalankan method before() di middleware
-                        // Jika middleware menggagalkan akses (misal redirect), maka script akan exit di sana
+                    if (class_exists($middlewareClass)) {
+                        $middlewareInstance = new $middlewareClass();
                         if (method_exists($middlewareInstance, 'before')) {
                             $middlewareInstance->before(); 
                         }
                     } else {
-                        die("Error Router: File Middleware <b>{$middleware}.php</b> tidak ditemukan di folder app/Middleware.");
+                        die("Error Router: Middleware <b>{$middlewareClass}</b> tidak ditemukan.");
                     }
                 }
-                // ---------------------------------------------------
 
                 // --- 2. EKSEKUSI CONTROLLER ---
-                $controllerFile = __DIR__ . '/../Controllers/' . $route['controller'] . '.php';
+                $controllerClass = "Ucup\\SimpleLoginPage\\Controllers\\" . $route['controller'];
                 
-                if (file_exists($controllerFile)) {
-                    require_once $controllerFile;
-                    $controllerName = $route['controller'];
-                    $controller = new $controllerName();
+                if (class_exists($controllerClass)) {
+                    $controller = new $controllerClass();
                     $function = $route['function'];
                     
                     if (method_exists($controller, $function)) {
                         $controller->$function();
-                        return; // Selesai, hentikan fungsi run()
+                        return; 
                     } else {
-                        die("Error Router: Fungsi <b>{$function}</b> tidak ditemukan di dalam class <b>{$controllerName}</b>.");
+                        die("Error Router: Fungsi <b>{$function}</b> tidak ditemukan di dalam class <b>{$controllerClass}</b>.");
                     }
                 } else {
-                    die("Error Router: File controller <b>{$route['controller']}.php</b> tidak ditemukan.");
+                    die("Error Router: Controller <b>{$controllerClass}</b> tidak ditemukan.");
                 }
             }
         }
 
-        // --- 3. JIKA RUTE TIDAK COCOK, TAMPILKAN HALAMAN ERROR 404 ---
         self::showErrorPage();
     }
 
-    /**
-     * Menampilkan halaman khusus jika URL yang diketik tidak ada di dalam Route
-     */
     private static function showErrorPage()
     {
-        // Set HTTP status code ke 404 (Not Found)
         http_response_code(404);
         
-        // Cek apakah Anda sudah membuat file view khusus 404 (opsional)
+        // Tetap menggunakan require untuk view karena view bukan class
         $errorView = __DIR__ . '/../Views/404.php';
         
         if (file_exists($errorView)) {
-            // Tampilkan view 404 buatan Anda jika ada
             require_once $errorView;
         } else {
-            // Tampilkan halaman error default dari router
             echo "<!DOCTYPE html>
             <html lang='id'>
             <head>
