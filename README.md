@@ -39,15 +39,19 @@ Sebelum menjalankan proyek ini, pastikan Anda telah menginstal lingkungan server
 
 ## Struktur Direktori
 
-*(Ini adalah contoh struktur umum, silakan disesuaikan jika ada file lain)*
 ```text
 simple-login-page/
-├── index.php      # Halaman utama setelah login berhasil
-├── login.php      # Halaman form login
-├── process.php    # Logika PHP untuk validasi dan autentikasi login
-├── logout.php     # Logika PHP untuk menghapus session (logout)
-├── style.css      # File CSS untuk styling halaman
-└── README.md      # Dokumentasi proyek
+├── app/
+│   ├── Controllers/
+│   ├── Models/
+│   │   ├── Entities/
+│   │   ├── Repositories/
+│   │   └── Services/
+│   └── Views/
+├── config/
+├── public/
+├── README.md
+└── routes/
 ```
 
 ## Catatan Keamanan

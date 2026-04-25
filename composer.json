@@ -1,0 +1,20 @@
+{
+    "name": "ucup/simple-login-page",
+    "description": "Simple login page",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Ucup\\SimpleLoginPage\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Usyup",
+            "email": "finder.ucup@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
