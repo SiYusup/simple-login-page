@@ -1,65 +1,75 @@
-# Simple Login Page (PHP)
+# Simple Login Page (Advanced MVC)
 
-Ini adalah proyek halaman login sederhana yang dibangun menggunakan PHP, HTML, dan CSS. Proyek ini cocok digunakan sebagai referensi atau dasar untuk mengimplementasikan sistem autentikasi dasar pada aplikasi web.
+Proyek ini adalah aplikasi web sistem autentikasi (Login & Registrasi) sederhana yang dibangun menggunakan **PHP Native** dengan arsitektur **MVC (Model-View-Controller)** yang modern. Aplikasi ini sudah dilengkapi dengan pemisahan lapisan logika menggunakan **Service** dan **Repository Pattern**, serta didukung oleh database **SQLite**.
 
-## Fitur
+## 🚀 Fitur Unggulan
 
-* Form login dengan input username/email dan password.
-* Validasi input sederhana (misalnya memastikan field tidak kosong).
-* Penanganan session untuk menjaga status login pengguna.
-* Desain responsif dan modern dengan CSS.
+*   **Autentikasi Lengkap**: Fitur Registrasi akun baru dan Login.
+*   **Keamanan Tinggi**: Penggunaan `password_hash()` dan `password_verify()` untuk keamanan data pengguna.
+*   **Arsitektur Modern**: Implementasi pola desain MVC, Service Layer, dan Repository Pattern.
+*   **Routing Dinamis**: Sistem routing custom dengan dukungan **Middleware** (Proteksi halaman).
+*   **Database SQLite**: Tanpa perlu instalasi server database rumit (Zero-Configuration).
+*   **Dashboard Admin**: Fitur pengelolaan akun seperti ganti username, ganti password, dan hapus akun.
+*   **Automated Testing**: Tersedia unit testing menggunakan **PHPUnit** untuk memastikan sistem berjalan stabil.
+*   **Desain Responsif**: Antarmuka pengguna dibangun menggunakan **Bootstrap 5**.
 
-## Prasyarat
-
-Sebelum menjalankan proyek ini, pastikan Anda telah menginstal lingkungan server lokal yang mendukung PHP, seperti:
-* [XAMPP](https://www.apachefriends.org/index.html)
-* [MAMP](https://www.mamp.info/)
-* [WampServer](https://www.wampserver.com/en/)
-
-## Cara Menjalankan Proyek
-
-1. **Clone atau Unduh Proyek:**
-   Unduh repository ini atau clone menggunakan Git:
-   ```bash
-   git clone <URL_REPOSITORY>
-   ```
-
-2. **Pindahkan ke Folder Server Lokal:**
-   * Jika menggunakan **XAMPP**, pindahkan folder `simple-login-page` ke dalam direktori `htdocs` (biasanya `C:\xampp\htdocs\` atau `/opt/lampp/htdocs/`).
-   * Jika menggunakan **MAMP** atau server lain, pindahkan ke direktori document root yang sesuai.
-
-3. **Jalankan Server:**
-   Buka aplikasi control panel server lokal Anda (XAMPP/MAMP/WAMP) dan jalankan layanan **Apache**.
-
-4. **Akses Melalui Browser:**
-   Buka browser web Anda dan ketikkan alamat berikut:
-   ```
-   http://localhost/simple-login-page
-   ```
-
-## Struktur Direktori
+## 📁 Struktur Folder
 
 ```text
 simple-login-page/
 ├── app/
-│   ├── Controllers/
+│   ├── Controllers/   # Logika pengatur alur aplikasi
+│   ├── Core/          # Inti sistem (Router & Koneksi Database)
+│   ├── Middleware/    # Proteksi rute (Auth Check)
 │   ├── Models/
-│   │   ├── Entities/
-│   │   ├── Repositories/
-│   │   └── Services/
-│   └── Views/
-├── config/
-├── public/
-├── README.md
-└── routes/
+│   │   ├── Entities/     # Representasi objek data (User)
+│   │   ├── Repositories/ # Abstraksi akses database
+│   │   └── Services/     # Logika bisnis aplikasi
+│   └── Views/         # Tampilan (HTML/Bootstrap)
+├── database/          # Tempat penyimpanan file SQLite (.sqlite)
+├── public/            # Entry point aplikasi (index.php) & assets
+├── routes/            # Definisi rute URL (web.php)
+├── tests/             # Unit testing (PHPUnit)
+├── vendor/            # Library pihak ketiga (Composer)
+└── composer.json      # Konfigurasi proyek & Autoloading PSR-4
 ```
 
-## Catatan Keamanan
+## 🛠️ Prasyarat
 
-Proyek ini dibuat untuk tujuan pembelajaran. Untuk penggunaan di tahap produksi (production), sangat disarankan untuk:
-* Menggunakan teknik *hashing* password (seperti `password_hash()` di PHP) untuk menyimpan password ke dalam database.
-* Melindungi aplikasi dari serangan *SQL Injection* menggunakan *Prepared Statements* (PDO atau MySQLi).
-* Melindungi aplikasi dari serangan *Cross-Site Scripting (XSS)* dan *Cross-Site Request Forgery (CSRF)*.
+*   **PHP 7.4** atau versi di atasnya.
+*   **Composer** terinstal (untuk autoloading & PHPUnit).
+*   Ekstensi PHP `pdo_sqlite` diaktifkan.
+
+## ⚙️ Cara Instalasi & Menjalankan
+
+1.  **Clone Proyek**:
+    ```bash
+    git clone https://github.com/SiYusup/simple-login-page.git
+    cd simple-login-page
+    ```
+
+2.  **Instal Dependensi**:
+    Jalankan composer untuk mengaktifkan fitur *autoloading* dan menginstal PHPUnit:
+    ```bash
+    composer install
+    ```
+
+3.  **Jalankan Server Lokal**:
+    Anda bisa menggunakan server bawaan PHP untuk menjalankan proyek ini:
+    ```bash
+    php -S localhost:8000 -t public
+    ```
+
+4.  **Akses Aplikasi**:
+    Buka browser dan akses ke: `http://localhost:8000`
+
+## 🧪 Cara Menjalankan Testing
+
+Proyek ini sudah dilengkapi dengan unit test. Anda bisa memastikan semua fungsi berjalan normal dengan perintah:
+
+```bash
+./vendor/bin/phpunit tests
+```
 
 ---
-Dibuat dengan ❤️ untuk pembelajaran PHP.
+Dibuat dengan ❤️ untuk pembelajaran arsitektur web PHP yang lebih baik.
